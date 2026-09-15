@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ro">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Calculator punctaj AFM Baterii 2026</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="calculator.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+<main>
+  <header><span class="badge">Baterii 2026</span><h1>Calculează-ți punctajul.</h1><p>Introdu valorile proiectului și vezi cum se împart cele 100 de puncte.</p></header>
+  <div class="layout">
+    <form id="calculator" novalidate>
+      <h2>Proiectul tău</h2>
+      <label for="capacity">Capacitate de stocare <span>kWh</span></label>
+      <input id="capacity" type="number" min="10" step="any" value="10" required aria-describedby="capacity-help">
+      <small id="capacity-help">Minimum 10 kWh. Punctajul maxim se atinge la 20 kWh.</small>
+      <label for="total">Valoarea totală a proiectului <span>lei, cu TVA</span></label>
+      <input id="total" type="number" min="0.01" step="0.01" value="20000" required>
+      <label for="ineligible">Din total: cheltuieli neeligibile <span>lei, cu TVA</span></label>
+      <input id="ineligible" type="number" min="0" step="0.01" value="0" required aria-describedby="ineligible-help">
+      <small id="ineligible-help">De exemplu, invertorul hibrid și instalarea lui. Sunt suportate integral din contribuția proprie. Nu include aici depășirea standardului de cost: se calculează automat.</small>
+      <label for="funding">Împarte valoarea totală <span>lei, cu TVA</span></label>
+      <div class="funding-split"><div><label for="funding-amount">Finanțare AFM (lei)</label><input id="funding-amount" type="number" step="0.01" value="15000" aria-describedby="limit"><small id="funding-percent"></small></div><div><label for="split-own">Contribuție proprie (lei)</label><input id="split-own" type="number" step="0.01" value="5000" aria-describedby="limit"><small id="split-percent"></small></div></div>
+      <div class="slider-wrap"><input id="funding" type="range" min="5000" max="15000" step="100" value="7500" aria-label="Finanțare AFM din valoarea totală" aria-describedby="funding-help limit"><div class="marker-track"><button id="optimal-marker" type="button" aria-label="Selectează punctajul maxim pentru contribuția proprie"></button></div></div>
+      <button id="optimal" type="button" class="optimal"></button>
+      <small id="funding-help">Spre stânga: contribui mai mult. Spre dreapta: finanțare AFM mai mare, până la plafon. Poți edita și oricare dintre cele două sume. La ieșirea din câmp, valorile sunt ajustate la intervalul permis.</small>
+      <button id="maximum" type="button">Folosește finanțarea maximă calculată</button>
+      <p id="limit" class="hint"></p>
+      <button type="reset" class="reset">Resetează exemplul</button>
+    </form>
+    <section class="result" aria-labelledby="result-title" aria-live="polite" aria-atomic="true">
+      <h2 id="result-title">Punctaj estimat</h2>
+      <div class="score"><output id="score">—</output><span>/ 100</span></div>
+      <p id="status"></p>
+      <div class="breakdown"><div><span>Contribuție proprie</span><strong id="own-score">—</strong></div><progress id="own-bar" max="50" value="0" aria-label="Puncte contribuție proprie"></progress><div><span>Capacitate baterie</span><strong id="capacity-score">—</strong></div><progress id="capacity-bar" max="50" value="0" aria-label="Puncte capacitate baterie"></progress></div>
+      <div class="contribution"><span>Contribuția ta</span><strong id="own">—</strong><small id="percentage"></small></div>
+      <p class="note">Estimare a punctajului, nu confirmare a eligibilității sau a finanțării. Selecția depinde de clasament și de bugetul sesiunii.</p>
+    </section>
+  </div>
+  <section class="rules"><h2>Cum se calculează?</h2>
+    <p><b>Setare calculator:</b> finanțarea AFM este limitată aici la minimum 25% din total, conform preferinței utilizatorului. Ghidul impune minimum 25% pentru contribuția proprie, nu pentru finanțarea AFM.</p>
+    <p><b>Contribuție:</b> minimum dintre 50 și 30 × contribuția proprie / finanțarea AFM. Contribuția proprie este diferența dintre totalul proiectului și finanțarea AFM.</p>
+    <p><b>Capacitate:</b> minimum dintre 50 și capacitatea în kWh × 2,5.</p>
+    <p><b>Limite verificate:</b> capacitate de minimum 10 kWh; finanțare de maximum 15.000 lei, maximum 75% din total și în limita cheltuielilor eligibile, plafonate la 1.500 lei/kWh. Costurile peste plafon rămân în contribuția proprie.</p>
+    <p><b>La egalitate:</b> contribuția proprie, apoi capacitatea de stocare, apoi data și ora înscrierii (art. 19 alin. 9). Punctajul de la înscriere nu se majorează ulterior.</p>
+    <p class="note">Valorile sunt afișate cu două zecimale; calculul păstrează precizia internă. Ghidul nu specifică aici o regulă de rotunjire.</p>
+  </section>
+  <footer>Sursă: <a href="https://www.afm.ro/main/programe/baterii/2026/ordin_1904-11_09_2026-2026-09-15.pdf" target="_blank" rel="noopener">Ordinul nr. 1.904/11.09.2026</a>, ghidul anexat, art. 5–6 și 19 (paginile 2–3 și 9).<br>Calculator independent. Datele introduse rămân în browser.</footer>
+  <p class="credits">Creat de <a href="mailto:florin.bera@gmail.com">florin.bera@gmail.com</a></p>
+  <noscript>Activează JavaScript pentru a calcula punctajul.</noscript>
+</main>
+</body>
+</html>
